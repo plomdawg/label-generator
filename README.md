@@ -13,19 +13,7 @@ A modern web application for generating 4x6" thermal labels with customizable te
 
 ## Templates
 
-The application includes three built-in templates:
-
-### Samples
-- CSF 0.5mL (40 labels)
-- PLASMA 0.5mL (15 labels)
-
-### Autopsy
-- SKELETAL MUSCLE 0.5mL (25 labels)
-- LIVER 0.5mL (20 labels)
-- HEART 0.5mL (15 labels)
-
-### Cables
-- PC (50 labels)
+The application includes three built-in templates hard-coded to match my own use cases.
 
 ## Adding New Templates
 
