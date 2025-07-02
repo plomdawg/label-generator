@@ -1,0 +1,290 @@
+{
+    "samples": {
+        "name": "Samples",
+        "description": "CSF and Plasma samples",
+        "variables": {
+            "id": "SAMPLE-001"
+        },
+        "items": [
+            {
+                "text": "{{ id }}\n{{ date }}\nCSF 0.5mL",
+                "quantity": 40
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nPLASMA 0.5mL",
+                "quantity": 15
+            }
+        ],
+        "defaults": {
+            "font_size": 22,
+            "bold": false,
+            "rows": 10,
+            "columns": 3,
+            "font_family": "DejaVuSansMono"
+        }
+    },
+    "autopsy": {
+        "name": "Autopsy",
+        "description": "Autopsy samples",
+        "variables": {
+            "id": "DM-0123"
+        },
+        "items": [
+            {
+                "text": "{{ id }}\n{{ date }}\nCORTEX   ",
+                "quantity": 16
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nCEREBELLUM  ",
+                "quantity": 6
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nBRAINSTEM   ",
+                "quantity": 6
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSPINAL CORD\nCERVICAL",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSPINAL CORD\nTHORACIC",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSPINAL CORD\nLUMBOSACRAL",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSPINAL CORD\nCAUDE EQUINA",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSKELETAL MUSCLE\nDELTOID",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSKELETAL MUSCLE\nGASTROC",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSKELETAL MUSCLE\nTIBIALIS ANTERIOR",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSKELETAL MUSCLE\nSOLEUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nSKELETAL MUSCLE\nVASTUS LATERALIS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nLEFT VENTRICLE",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nRIGHT VENTRICLE",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nLEFT ATRIUM",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nRIGHT ATRIUM",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nPROXIMAL\nESOPHAGUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nDISTAL\nESOPHAGUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nILEUM",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nJEJUNUM",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nCOLON",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nKIDNEY",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nLIVER",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nLUNG",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nPANCREAS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nRIGHT EYE",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nLEFT EYE",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nOVARY",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFIXED MUSCLE\nDELTOID",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFIXED MUSCLE\nGASTROC",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFIXED MUSCLE\nVASTUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFIXED MUSCLE\nTIBIALIS ANTERIOR",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nMOUNTED MUSCLE\nDELTOID",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nMOUNTED MUSCLE\nGASTROC",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nMOUNTED MUSCLE\nVASTUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nMOUNTED MUSCLE\nTIBIALIS ANTERIOR",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFLASH FROZEN\nDELTOID",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFLASH FROZEN\nGASTROC",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFLASH FROZEN\nVASTUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nFLASH FROZEN\nTIBIALIS ANTERIOR",
+                "quantity": 1
+            }
+        ],
+        "defaults": {
+            "font_size": 32,
+            "bold": false,
+            "rows": 7,
+            "columns": 2,
+            "font_family": "DejaVuSans"
+        }
+    },
+    "brain": {
+        "name": "Brain",
+        "description": "Brain regions",
+        "variables": {
+            "id": "DM-0123"
+        },
+        "items": [
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #1\nINF PARIETAL LOBULE",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #2\nMID TEMPORAL GYRI",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #3\nHIPPOCAMPAL BODY",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #4\nCAUDATE/PUTAMAN/\nACCUMBENS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #5\nMID FRONTAL GYRUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #6\nCEREBELLUM",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #7\nANT. HIPPOCAMPUS/\nENTORHINAL CORTEX",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #8\nTHALAMUS/\nSUBTHALAMIC NUCLEUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #9\nINSULA/PUTAMEN/\nGLOBUS PALLIDUS",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #10\nAMYGDALA",
+                "quantity": 1
+            },
+            {
+                "text": "{{ id }}\n{{ date }}\nREGION #11\nSTRIATE/\nPARATRIATE CORTEX",
+                "quantity": 1
+            }
+        ],
+        "defaults": {
+            "font_size": 20,
+            "bold": false,
+            "rows": 7,
+            "columns": 2,
+            "font_family": "DejaVuSansMono"
+        }
+    },
+    "cables": {
+        "name": "Cables",
+        "description": "PC cables",
+        "variables": {
+            "space": "     "
+        },
+        "items": [
+            {
+                "text": "POWER{{ space }}POWER",
+                "quantity": 1
+            },
+            {
+                "text": "VIDEO{{ space }}VIDEO",
+                "quantity": 1
+            },
+            {
+                "text": "EXAMPLE{{ space }}EXAMPLE\nTEXT{{ space }}TEXT",
+                "quantity": 1
+            }
+        ],
+        "defaults": {
+            "font_size": 24,
+            "bold": true,
+            "rows": 10,
+            "columns": 2,
+            "font_family": "DejaVuSans"
+        }
+    }
+}
