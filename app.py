@@ -35,6 +35,7 @@ static_dir.mkdir(exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
+
 # Load templates configuration
 def load_templates() -> Dict[str, Any]:
     """Load templates from JSON file."""
@@ -49,17 +50,18 @@ def load_templates() -> Dict[str, Any]:
                 "description": "CSF and Plasma samples",
                 "items": [
                     {"text": "EXAMPLE TEXT\n{{ today }}\nCSF 0.5mL", "quantity": 40},
-                    {"text": "EXAMPLE TEXT\n{{ today }}\nPLASMA 0.5mL", "quantity": 15}
+                    {"text": "EXAMPLE TEXT\n{{ today }}\nPLASMA 0.5mL", "quantity": 15},
                 ],
                 "defaults": {
                     "font_size": 24,
                     "bold": true,
                     "rows": 10,
                     "columns": 3,
-                    "font_family": "DejaVuSans"
-                }
+                    "font_family": "DejaVuSans",
+                },
             }
         }
+
 
 # Create a simple test image in static directory
 test_img = Image.new("RGB", (100, 100), color="red")
@@ -128,24 +130,24 @@ def parse_input(input_text: str, variables: Dict[str, str] = None) -> List[str]:
     try:
         items = json.loads(input_text)
         labels = []
-        
+
         # Merge with provided variables
         all_vars = {}
         if variables:
             all_vars.update(variables)
-        
+
         # Always include today's date if not provided
-        if 'date' not in all_vars:
-            all_vars['date'] = datetime.now().strftime("%m/%d/%Y")
-        
+        if "date" not in all_vars:
+            all_vars["date"] = datetime.now().strftime("%m/%d/%Y")
+
         for item in items:
             text = item["text"]
             quantity = min(int(item.get("quantity", 1)), 300)  # Limit quantity to 300
-            
+
             # Replace all variables
             for var_name, var_value in all_vars.items():
                 text = text.replace(f"{{{{ {var_name} }}}}", str(var_value))
-            
+
             labels.extend([text] * quantity)
         return labels
     except json.JSONDecodeError as e:
@@ -219,7 +221,9 @@ def create_label_sheets(
             total_text_height = len(lines) * (font_size + 4)
             start_y = y + (label_height - total_text_height) // 2
             for i, line in enumerate(lines):
-                text_width, text_height = draw.textsize(line, font=font)
+                bbox = draw.textbbox((0, 0), line, font=font)
+                text_width = bbox[2] - bbox[0]
+                text_height = bbox[3] - bbox[1]
                 text_x = x + (label_width - text_width) // 2
                 text_y = start_y + i * (font_size + 4)
                 draw.text((text_x, text_y), line, fill="black", font=font)
