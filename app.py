@@ -13,6 +13,7 @@ import uvicorn
 from datetime import datetime
 import pytz
 import json
+import base64
 
 app = FastAPI(title="Label Generator", description="A modern label generator web app")
 
@@ -61,11 +62,6 @@ def load_templates() -> Dict[str, Any]:
                 },
             }
         }
-
-
-# Create a simple test image in static directory
-test_img = Image.new("RGB", (100, 100), color="red")
-test_img.save(static_dir / "test.png")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -340,15 +336,17 @@ async def preview_labels(
     )
     print(f"Created {len(sheets)} sheets")
 
-    # Save all preview images to static directory
+    # Generate all preview images in-memory as base64 data URLs
     preview_urls = []
     for i, sheet in enumerate(sheets):
-        preview_path = static_dir / f"preview_{i}.png"
-        sheet.save(preview_path, format="PNG")
-        preview_urls.append(f"/static/preview_{i}.png")
-        print(f"Saved preview {i} to {preview_path}")
+        img_io = io.BytesIO()
+        sheet.save(img_io, format="PNG")
+        img_io.seek(0)
+        img_base64 = base64.b64encode(img_io.read()).decode("utf-8")
+        preview_urls.append(f"data:image/png;base64,{img_base64}")
+        print(f"Generated preview {i} in-memory")
 
-    # Return the paths to all saved images
+    # Return the base64 data URLs
     return {"preview_urls": preview_urls}
 
 

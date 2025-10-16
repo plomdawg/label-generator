@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +14,11 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
 </head>
+
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-6 text-center">4x6" Thermal Label Generator</h1>
-        
+
         <!-- Template Selection -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-6" x-data="templateSelector()" x-init="loadTemplates()">
             <h2 class="text-lg font-semibold text-gray-800 mb-3">Select Template</h2>
@@ -24,7 +26,7 @@
                 <!-- Template buttons will be inserted here -->
             </div>
         </div>
-        
+
         <!-- Variables Section -->
         <div class="bg-white rounded-lg shadow-md p-4 mb-6" x-data="variablesManager()" x-init="init()">
             <div class="flex items-center space-x-2 mb-3">
@@ -35,70 +37,54 @@
                 <template x-for="(value, key) in variables" :key="key">
                     <div class="flex items-center space-x-2">
                         <div class="w-32">
-                            <input type="text" 
-                                :value="key" 
-                                @blur="updateVariableKey(key, $event.target.value)"
+                            <input type="text" :value="key" @blur="updateVariableKey(key, $event.target.value)"
                                 @keyup.enter="updateVariableKey(key, $event.target.value)"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Name">
                         </div>
                         <div class="flex-1">
-                            <input type="text" 
-                                x-model="variables[key]"
-                                @input="updatePreview()"
+                            <input type="text" x-model="variables[key]" @input="updatePreview()"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Value">
                         </div>
-                        <button type="button"
-                            @click="removeVariable(key)"
+                        <button type="button" @click="removeVariable(key)"
                             class="p-2 text-red-500 hover:text-red-700 focus:outline-none">
                             🗑️
                         </button>
                     </div>
                 </template>
-                <button type="button"
-                    @click="addVariable()"
+                <button type="button" @click="addVariable()"
                     class="flex items-center space-x-1 text-blue-500 hover:text-blue-700 focus:outline-none">
                     <span>➕</span>
                     <span>Add Variable</span>
                 </button>
             </div>
         </div>
-        
+
         <div class="flex flex-col md:flex-row gap-6">
             <div class="w-full md:w-1/2">
                 <div class="bg-white rounded-lg shadow-md p-6">
                     <form method="post" action="/generate" enctype="multipart/form-data" class="space-y-4"
-                          x-data="labelForm()" 
-                          x-init="init()"
-                          @input.debounce.300ms.window="updatePreview()">
+                        x-data="labelForm()" x-init="init()" @input.debounce.300ms.window="updatePreview()">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Label Data</label>
                             <div class="space-y-2">
                                 <template x-for="(item, index) in items" :key="index">
                                     <div class="flex items-start space-x-2">
                                         <div class="flex-1">
-                                            <textarea
-                                                x-model="item.text"
-                                                rows="3"
+                                            <textarea x-model="item.text" rows="3"
                                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                                 placeholder="Enter label text..."></textarea>
                                         </div>
                                         <div class="flex items-start space-x-2">
                                             <div class="w-24">
-                                                <input type="number"
-                                                    x-model="item.quantity"
-                                                    min="1"
-                                                    max="300"
+                                                <input type="number" x-model="item.quantity" min="1" max="300"
                                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                                    placeholder="Qty"
-                                                    title="Maximum quantity is 300 labels">
+                                                    placeholder="Qty" title="Maximum quantity is 300 labels">
                                             </div>
-                                            <button type="button"
-                                                @click="items.splice(index, 1)"
+                                            <button type="button" @click="items.splice(index, 1)"
                                                 class="p-2 text-red-500 hover:text-red-700 focus:outline-none"
-                                                x-data="{ confirmDelete: false }"
-                                                @mouseenter="confirmDelete = true"
+                                                x-data="{ confirmDelete: false }" @mouseenter="confirmDelete = true"
                                                 @mouseleave="confirmDelete = false">
                                                 <span x-show="!confirmDelete">🗑️</span>
                                                 <span x-show="confirmDelete" class="text-sm font-medium">Delete</span>
@@ -106,8 +92,7 @@
                                         </div>
                                     </div>
                                 </template>
-                                <button type="button"
-                                    @click="items.push({ text: '', quantity: 1 })"
+                                <button type="button" @click="items.push({ text: '', quantity: 1 })"
                                     class="mt-2 flex items-center space-x-1 text-blue-500 hover:text-blue-700 focus:outline-none">
                                     <span>➕</span>
                                     <span>Add Label</span>
@@ -118,7 +103,7 @@
                         <div class="flex space-x-4 items-end">
                             <div class="flex-1">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
-                                <select name="font_family" 
+                                <select name="font_family"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     x-model="fontFamily">
                                     <option value="DejaVuSans">DejaVu Sans</option>
@@ -155,19 +140,24 @@
                                     x-model="columns">
                             </div>
                         </div>
-                        <div class="flex space-x-4">
-                            <button type="submit" 
-                                class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                Download as PDF
-                            </button>
-                            <button type="button" 
-                                @click="printLabels()"
-                                x-show="!isMobile"
-                                class="flex-1 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                                Print
+                        <div class="flex flex-col space-y-2">
+                            <div class="flex space-x-4">
+                                <button type="submit"
+                                    class="flex-1 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    Download as PDF
+                                </button>
+                                <button type="button" @click="printLabels()" x-show="!isMobile"
+                                    class="flex-1 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                                    Print
+                                </button>
+                            </div>
+                            <button type="button" @click="copyShareLink()"
+                                class="w-full bg-purple-500 text-white py-2 px-4 rounded-md hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                                🔗 Copy Share Link
                             </button>
                         </div>
-                        <input type="hidden" name="variables" x-model="JSON.stringify(window.variablesManagerInstance ? window.variablesManagerInstance.variables : {})">
+                        <input type="hidden" name="variables"
+                            x-model="JSON.stringify(window.variablesManagerInstance ? window.variablesManagerInstance.variables : {})">
                     </form>
                 </div>
             </div>
@@ -176,7 +166,8 @@
                 <div class="bg-white rounded-lg shadow-md p-6 sticky top-6">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Live Preview</h2>
                     <div class="border border-gray-300 rounded-lg p-4 bg-gray-50">
-                        <div id="preview-container" class="flex flex-col items-center space-y-4 max-h-[600px] overflow-y-auto">
+                        <div id="preview-container"
+                            class="flex flex-col items-center space-y-4 max-h-[600px] overflow-y-auto">
                             <!-- Preview images will be inserted here -->
                         </div>
                         <div id="no-preview" class="text-center text-gray-500 py-8">
@@ -195,47 +186,75 @@
                 init() {
                     // Store instance globally for form access
                     window.variablesManagerInstance = this;
-                    
-                    // Initialize with default variables
-                    this.variables = {
-                        'date': new Date().toLocaleDateString('en-US', {
-                            month: 'numeric',
-                            day: 'numeric', 
-                            year: 'numeric'
-                        }),
-                        'id': 'SAMPLE-001'
-                    };
+
+                    // Load from localStorage first
+                    this.loadVariables();
+
+                    // If no saved variables, initialize with defaults
+                    if (Object.keys(this.variables).length === 0) {
+                        this.variables = {
+                            'date': new Date().toLocaleDateString('en-US', {
+                                month: 'numeric',
+                                day: 'numeric',
+                                year: 'numeric'
+                            }),
+                            'id': 'SAMPLE-001'
+                        };
+                        this.saveVariables();
+                    }
+                },
+                loadVariables() {
+                    try {
+                        const saved = localStorage.getItem('labelGenerator_variables');
+                        if (saved) {
+                            this.variables = JSON.parse(saved);
+                            console.log('💾 Loaded variables from localStorage');
+                        }
+                    } catch (e) {
+                        console.error('❌ Failed to load variables from localStorage:', e);
+                    }
+                },
+                saveVariables() {
+                    try {
+                        localStorage.setItem('labelGenerator_variables', JSON.stringify(this.variables));
+                    } catch (e) {
+                        console.error('❌ Failed to save variables to localStorage:', e);
+                    }
                 },
                 addVariable() {
                     const newKey = '';
                     this.variables[newKey] = '';
+                    this.saveVariables();
                     this.updatePreview();
                 },
                 removeVariable(key) {
                     delete this.variables[key];
+                    this.saveVariables();
                     this.updatePreview();
                 },
                 updateVariableKey(oldKey, newKey) {
                     if (newKey && newKey !== oldKey && !this.variables[newKey]) {
                         this.variables[newKey] = this.variables[oldKey];
                         delete this.variables[oldKey];
+                        this.saveVariables();
                         this.updatePreview();
                     }
                 },
                 loadTemplateVariables(template) {
                     // Start with template variables
                     this.variables = template.variables ? { ...template.variables } : {};
-                    
+
                     // Always add today's date
                     this.variables.date = new Date().toLocaleDateString('en-US', {
                         month: 'numeric',
-                        day: 'numeric', 
+                        day: 'numeric',
                         year: 'numeric'
                     });
-                    
+
                     this.updatePreview();
                 },
                 updatePreview() {
+                    this.saveVariables();
                     if (window.labelFormInstance) {
                         window.labelFormInstance.updatePreview();
                     }
@@ -253,11 +272,13 @@
                         .then(data => {
                             this.templates = data;
                             this.renderTemplateButtons();
-                            
+
                             // Load initial template from URL or default
                             const urlParams = new URLSearchParams(window.location.search);
                             const templateId = urlParams.get('template') || 'samples';
-                            this.selectTemplate(templateId);
+
+                            // Pass skipDataLoad=true on initial load to preserve saved data
+                            this.selectTemplate(templateId, true);
                         })
                         .catch(err => {
                             console.error('Failed to load templates:', err);
@@ -266,48 +287,55 @@
                 renderTemplateButtons() {
                     const container = document.getElementById('template-buttons');
                     container.innerHTML = '';
-                    
+
                     Object.entries(this.templates).forEach(([id, template]) => {
                         const button = document.createElement('button');
                         button.type = 'button';
                         button.className = 'px-4 py-2 rounded-md border transition-colors';
                         button.textContent = template.name;
                         button.title = template.description;
-                        
+
                         if (id === this.selectedTemplate) {
                             button.className += ' bg-blue-500 text-white border-blue-500';
                         } else {
                             button.className += ' bg-white text-gray-700 border-gray-300 hover:bg-gray-50';
                         }
-                        
+
                         button.onclick = () => this.selectTemplate(id);
                         container.appendChild(button);
                     });
                 },
-                selectTemplate(templateId) {
+                selectTemplate(templateId, skipDataLoad = false) {
                     if (!this.templates[templateId]) {
                         console.error('Template not found:', templateId);
                         return;
                     }
-                    
+
                     this.selectedTemplate = templateId;
                     this.renderTemplateButtons();
-                    
+
                     // Update URL
                     const urlParams = new URLSearchParams(window.location.search);
                     urlParams.set('template', templateId);
                     const newURL = `${window.location.pathname}?${urlParams.toString()}`;
                     window.history.replaceState({}, '', newURL);
-                    
-                    // Update form with template data
-                    const template = this.templates[templateId];
-                    if (window.labelFormInstance) {
-                        window.labelFormInstance.loadTemplate(template);
-                    }
-                    
-                    // Update variables with template variables
-                    if (window.variablesManagerInstance) {
-                        window.variablesManagerInstance.loadTemplateVariables(template);
+
+                    // Only load template data if explicitly requested (user clicked button)
+                    // Skip on initial page load to preserve saved/shared data
+                    if (!skipDataLoad) {
+                        const template = this.templates[templateId];
+
+                        // Update form with template data
+                        if (window.labelFormInstance) {
+                            window.labelFormInstance.loadTemplate(template);
+                        }
+
+                        // Update variables with template variables
+                        if (window.variablesManagerInstance) {
+                            window.variablesManagerInstance.loadTemplateVariables(template);
+                        }
+                    } else {
+                        console.log('⏭️  Skipping template data load to preserve saved data');
                     }
                 }
             };
@@ -328,27 +356,84 @@
                 init() {
                     // Store instance globally for template selector access
                     window.labelFormInstance = this;
-                    
+
                     // Initialize from URL parameters if they exist
                     const urlParams = new URLSearchParams(window.location.search);
-                    
+
                     this.fontSize = parseInt(urlParams.get('font_size')) || 24;
                     // Default bold to true if not in URL parameters
                     this.bold = urlParams.has('bold') ? urlParams.get('bold') === 'true' : true;
                     this.rows = parseInt(urlParams.get('rows')) || 10;
                     this.columns = parseInt(urlParams.get('columns')) || 3;
                     this.fontFamily = urlParams.get('font_family') || 'DejaVuSans';
-                    
+
+                    // Load label data from URL (for sharing) or localStorage (for persistence)
+                    this.loadLabelData();
+
                     // Check if device is mobile
                     this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-                    
+
                     // Update preview after initialization
                     this.updatePreview();
+                },
+                loadLabelData() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const urlData = urlParams.get('data');
+
+                    if (urlData) {
+                        // Priority 1: Load from URL (for shared links)
+                        try {
+                            const decoded = atob(urlData);
+                            const items = JSON.parse(decoded);
+                            this.items = items;
+                            console.log('📥 Loaded label data from URL');
+                            // Save to localStorage for future sessions
+                            this.saveLabelData();
+                            return;
+                        } catch (e) {
+                            console.error('❌ Failed to load data from URL:', e);
+                        }
+                    }
+
+                    // Priority 2: Load from localStorage (for persistence)
+                    try {
+                        const saved = localStorage.getItem('labelGenerator_items');
+                        if (saved) {
+                            const items = JSON.parse(saved);
+                            this.items = items;
+                            console.log('💾 Loaded label data from localStorage');
+                        }
+                    } catch (e) {
+                        console.error('❌ Failed to load data from localStorage:', e);
+                    }
+                },
+                saveLabelData() {
+                    try {
+                        localStorage.setItem('labelGenerator_items', JSON.stringify(this.items));
+                        console.log('💾 Saved label data to localStorage');
+                    } catch (e) {
+                        console.error('❌ Failed to save to localStorage:', e);
+                    }
+                },
+                generateShareLink() {
+                    const data = btoa(JSON.stringify(this.items));
+                    const params = new URLSearchParams(window.location.search);
+                    params.set('data', data);
+                    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+                },
+                copyShareLink() {
+                    const link = this.generateShareLink();
+                    navigator.clipboard.writeText(link).then(() => {
+                        alert('🔗 Share link copied to clipboard!');
+                    }).catch(err => {
+                        console.error('❌ Failed to copy link:', err);
+                        prompt('Copy this link:', link);
+                    });
                 },
                 loadTemplate(template) {
                     // Load template items
                     this.items = [...template.items];
-                    
+
                     // Load template defaults if they exist
                     if (template.defaults) {
                         this.fontSize = template.defaults.font_size || this.fontSize;
@@ -357,7 +442,10 @@
                         this.columns = template.defaults.columns || this.columns;
                         this.fontFamily = template.defaults.font_family || this.fontFamily;
                     }
-                    
+
+                    // Save to localStorage
+                    this.saveLabelData();
+
                     // Update preview
                     this.updatePreview();
                 },
@@ -368,18 +456,24 @@
                     params.set('rows', this.rows.toString());
                     params.set('columns', this.columns.toString());
                     params.set('font_family', this.fontFamily);
-                    
+
                     // Get current template from URL or default to samples
                     const currentTemplate = new URLSearchParams(window.location.search).get('template') || 'samples';
                     params.set('template', currentTemplate);
-                    
+
                     const newURL = `${window.location.pathname}?${params.toString()}`;
                     window.history.replaceState({}, '', newURL);
                 },
                 updatePreview() {
+                    console.log('🔵 updatePreview() called, items.length:', this.items?.length || 0);
+
                     if (!this.items.length) {
-                        document.getElementById('preview-container').innerHTML = '';
-                        document.getElementById('no-preview').style.display = 'block';
+                        const previewContainer = document.getElementById('preview-container');
+                        const noPreview = document.getElementById('no-preview');
+                        previewContainer.innerHTML = '';
+                        noPreview.textContent = 'Enter label data to see a preview';
+                        noPreview.style.display = 'block';
+                        console.log('⚠️  No items, showing empty message');
                         return;
                     }
 
@@ -393,78 +487,136 @@
                     formData.append('rows', this.rows.toString());
                     formData.append('columns', this.columns.toString());
                     formData.append('font_family', this.fontFamily);
-                    
+
                     // Add variables
                     const variables = window.variablesManagerInstance ? window.variablesManagerInstance.variables : {};
                     formData.append('variables', JSON.stringify(variables));
 
-                    console.log('Sending preview request:');
-                    console.log('Label data:', this.items);
-                    console.log('Font size:', this.fontSize);
-                    console.log('Bold:', this.bold);
-                    console.log('Rows:', this.rows);
-                    console.log('Columns:', this.columns);
-                    console.log('Font Family:', this.fontFamily);
+                    console.log('📤 Sending preview request:');
+                    console.log('  Label data:', this.items);
+                    console.log('  Font size:', this.fontSize);
+                    console.log('  Bold:', this.bold);
+                    console.log('  Rows:', this.rows);
+                    console.log('  Columns:', this.columns);
+                    console.log('  Font Family:', this.fontFamily);
+
+                    // Auto-save to localStorage
+                    this.saveLabelData();
 
                     // Show loading state
-                    document.getElementById('preview-container').innerHTML = '';
-                    document.getElementById('no-preview').style.display = 'block';
+                    const previewContainer = document.getElementById('preview-container');
+                    const noPreview = document.getElementById('no-preview');
+                    previewContainer.innerHTML = '';
+                    noPreview.textContent = 'Generating preview...';
+                    noPreview.style.display = 'block';
 
                     fetch('/preview', {
                         method: 'POST',
-                        body: formData
+                        body: formData,
+                        cache: 'no-cache'
                     })
-                    .then(response => {
-                        console.log('Preview response status:', response.status);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Received preview data:', data);
-                        const timestamp = new Date().getTime();
-                        
-                        const previewContainer = document.getElementById('preview-container');
-                        previewContainer.innerHTML = ''; // Clear existing previews
-                        
-                        data.preview_urls.forEach((url, index) => {
-                            const previewUrl = `${url}?t=${timestamp}`;
-                            console.log(`Loading preview ${index + 1}:`, previewUrl);
-                            
-                            const previewWrapper = document.createElement('div');
-                            previewWrapper.className = 'preview-page';
-                            
-                            const pageLabel = document.createElement('div');
-                            pageLabel.className = 'text-sm text-gray-600 mb-2';
-                            pageLabel.textContent = `Page ${index + 1}`;
-                            previewWrapper.appendChild(pageLabel);
-                            
-                            const previewImage = document.createElement('img');
-                            previewImage.src = previewUrl;
-                            previewImage.className = 'max-w-full h-auto';
-                            previewImage.alt = `Label Preview Page ${index + 1}`;
-                            
-                            previewImage.onload = function() {
-                                previewWrapper.style.display = 'block';
-                            };
-                            
-                            previewImage.onerror = function() {
-                                console.error(`Failed to load preview image ${index + 1}`);
-                                previewWrapper.style.display = 'none';
-                            };
-                            
-                            previewWrapper.appendChild(previewImage);
-                            previewContainer.appendChild(previewWrapper);
+                        .then(response => {
+                            console.log('Preview response status:', response.status);
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('✅ Received preview data with', data.preview_urls.length, 'images');
+                            console.log('📊 First URL sample:', data.preview_urls[0]?.substring(0, 80) + '...');
+                            const timestamp = new Date().getTime();
+
+                            const previewContainer = document.getElementById('preview-container');
+
+                            // Revoke old blob URLs to free memory
+                            const oldImages = previewContainer.querySelectorAll('img');
+                            oldImages.forEach(img => {
+                                if (img.src && img.src.startsWith('blob:')) {
+                                    URL.revokeObjectURL(img.src);
+                                }
+                            });
+
+                            previewContainer.innerHTML = ''; // Clear existing previews
+                            console.log('🔄 Cleared preview container, rendering new images...');
+
+                            data.preview_urls.forEach((dataUrl, index) => {
+                                console.log(`📥 Processing preview ${index + 1}...`);
+
+                                try {
+                                    const previewWrapper = document.createElement('div');
+                                    previewWrapper.className = 'preview-page';
+                                    previewWrapper.setAttribute('data-timestamp', timestamp);
+
+                                    const pageLabel = document.createElement('div');
+                                    pageLabel.className = 'text-sm text-gray-600 mb-2';
+                                    pageLabel.textContent = `Page ${index + 1}`;
+                                    previewWrapper.appendChild(pageLabel);
+
+                                    const previewImage = document.createElement('img');
+                                    previewImage.className = 'max-w-full h-auto';
+                                    previewImage.alt = `Label Preview Page ${index + 1}`;
+                                    previewImage.setAttribute('data-preview-key', `${timestamp}-${index}`);
+
+                                    // Convert base64 data URL to Blob URL to force browser refresh
+                                    console.log(`🔄 Converting base64 to blob for image ${index + 1}...`);
+                                    console.log(`📋 DataURL type: ${typeof dataUrl}, starts with:`, dataUrl.substring(0, 50));
+
+                                    let base64Data;
+                                    if (dataUrl.startsWith('data:image/png;base64,')) {
+                                        base64Data = dataUrl.split(',')[1];
+                                    } else if (dataUrl.includes(',')) {
+                                        base64Data = dataUrl.split(',')[1];
+                                    } else {
+                                        // Assume it's already just the base64 data
+                                        base64Data = dataUrl;
+                                    }
+
+                                    if (!base64Data) {
+                                        console.error('❌ DataURL:', dataUrl.substring(0, 100));
+                                        throw new Error('No base64 data found in URL');
+                                    }
+
+                                    const byteCharacters = atob(base64Data);
+                                    const byteNumbers = new Array(byteCharacters.length);
+                                    for (let i = 0; i < byteCharacters.length; i++) {
+                                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                    }
+                                    const byteArray = new Uint8Array(byteNumbers);
+                                    const blob = new Blob([byteArray], { type: 'image/png' });
+                                    const blobUrl = URL.createObjectURL(blob);
+
+                                    console.log(`🔗 Created blob URL for image ${index + 1}:`, blobUrl.substring(0, 50) + '...');
+                                    previewImage.src = blobUrl;
+
+                                    previewImage.onload = function () {
+                                        previewWrapper.style.display = 'block';
+                                        console.log(`✅ Preview image ${index + 1} loaded successfully`);
+                                    };
+
+                                    previewImage.onerror = function (err) {
+                                        console.error(`❌ Failed to load preview image ${index + 1}:`, err);
+                                        previewWrapper.style.display = 'none';
+                                        URL.revokeObjectURL(blobUrl);
+                                    };
+
+                                    previewWrapper.appendChild(previewImage);
+                                    previewContainer.appendChild(previewWrapper);
+                                } catch (error) {
+                                    console.error(`❌ Error processing preview ${index + 1}:`, error);
+                                }
+                            });
+
+                            document.getElementById('no-preview').style.display = 'none';
+                        })
+                        .catch(err => {
+                            console.error("Failed to fetch preview:", err);
+                            const previewContainer = document.getElementById('preview-container');
+                            const noPreview = document.getElementById('no-preview');
+                            previewContainer.innerHTML = '';
+                            noPreview.textContent = 'Enter label data to see a preview';
+                            noPreview.style.display = 'block';
                         });
-                        
-                        document.getElementById('no-preview').style.display = 'none';
-                    })
-                    .catch(err => {
-                        console.error("Failed to fetch preview:", err);
-                        document.getElementById('preview-container').innerHTML = '';
-                        document.getElementById('no-preview').style.display = 'block';
-                    });
                 },
                 printLabels() {
                     const formData = new FormData();
@@ -474,7 +626,7 @@
                     formData.append('rows', this.rows.toString());
                     formData.append('columns', this.columns.toString());
                     formData.append('font_family', this.fontFamily);
-                    
+
                     // Add variables
                     const variables = window.variablesManagerInstance ? window.variablesManagerInstance.variables : {};
                     formData.append('variables', JSON.stringify(variables));
@@ -486,44 +638,45 @@
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        const url = window.URL.createObjectURL(blob);
-                        
-                        if (isMobile) {
-                            // For mobile devices, open PDF in new tab
-                            window.open(url, '_blank');
-                        } else {
-                            // For desktop, use iframe printing
-                            const iframe = document.createElement('iframe');
-                            iframe.style.display = 'none';
-                            document.body.appendChild(iframe);
-                            
-                            iframe.onload = function() {
-                                setTimeout(() => {
-                                    try {
-                                        iframe.contentWindow.print();
-                                    } catch (e) {
-                                        console.error('Print error:', e);
-                                    }
-                                }, 1000);
-                            };
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const url = window.URL.createObjectURL(blob);
 
-                            iframe.src = url;
-                            
-                            window.addEventListener('afterprint', function cleanup() {
-                                document.body.removeChild(iframe);
-                                window.URL.revokeObjectURL(url);
-                                window.removeEventListener('afterprint', cleanup);
-                            });
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Failed to print labels:", err);
-                    });
+                            if (isMobile) {
+                                // For mobile devices, open PDF in new tab
+                                window.open(url, '_blank');
+                            } else {
+                                // For desktop, use iframe printing
+                                const iframe = document.createElement('iframe');
+                                iframe.style.display = 'none';
+                                document.body.appendChild(iframe);
+
+                                iframe.onload = function () {
+                                    setTimeout(() => {
+                                        try {
+                                            iframe.contentWindow.print();
+                                        } catch (e) {
+                                            console.error('Print error:', e);
+                                        }
+                                    }, 1000);
+                                };
+
+                                iframe.src = url;
+
+                                window.addEventListener('afterprint', function cleanup() {
+                                    document.body.removeChild(iframe);
+                                    window.URL.revokeObjectURL(url);
+                                    window.removeEventListener('afterprint', cleanup);
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Failed to print labels:", err);
+                        });
                 }
             };
         }
     </script>
 </body>
+
 </html>
