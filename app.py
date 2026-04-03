@@ -83,9 +83,9 @@ async def index(request: Request):
     font_family = request.query_params.get("font_family", "DejaVuSans")
 
     return templates.TemplateResponse(
+        request,
         "index.html",
         {
-            "request": request,
             "today": today,
             "template_id": template_id,
             "initial_font_size": font_size,
