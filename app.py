@@ -233,12 +233,13 @@ def create_label_sheets(
 async def generate_labels(
     label_data: str = Form(...),
     font_size: int = Form(24),
-    bold: bool = Form(False),
+    bold: str = Form("false"),
     rows: int = Form(10),
     columns: int = Form(3),
     font_family: str = Form("DejaVuSans"),
     variables: str = Form("{}"),
 ):
+    bold = bold.lower() == "true"
     print(f"Received font size: {font_size} (type: {type(font_size)})")
     print(f"Received bold setting: {bold} (type: {type(bold)})")
 
@@ -290,12 +291,13 @@ async def generate_labels(
 async def preview_labels(
     label_data: str = Form(...),
     font_size: int = Form(24),
-    bold: bool = Form(True),
+    bold: str = Form("true"),
     rows: int = Form(10),
     columns: int = Form(3),
     font_family: str = Form("DejaVuSans"),
     variables: str = Form("{}"),
 ):
+    bold = bold.lower() == "true"
     print(f"Preview request received:")
     print(f"Label data: {label_data}")
     print(f"Font size: {font_size} (type: {type(font_size)})")
