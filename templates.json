@@ -259,6 +259,26 @@
             "font_family": "DejaVuSansMono"
         }
     },
+    "boxes": {
+        "name": "Boxes",
+        "description": "Labels for cardboard boxes — storage or moving",
+        "variables": {
+            "room": "Living Room"
+        },
+        "items": [
+            {
+                "text": "STUFF",
+                "quantity": 5
+            }
+        ],
+        "defaults": {
+            "font_size": 64,
+            "bold": true,
+            "rows": 5,
+            "columns": 1,
+            "font_family": "DejaVuSans"
+        }
+    },
     "cables": {
         "name": "Cables",
         "description": "PC cables",
