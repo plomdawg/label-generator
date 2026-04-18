@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 pillow
+pilmoji
 pytz
 jinja2
 python-multipart

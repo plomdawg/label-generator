@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from PIL import Image, ImageDraw, ImageFont
+from pilmoji import Pilmoji
 import io
 import math
 from typing import List, Dict, Any
@@ -205,24 +206,24 @@ def create_label_sheets(
         sheet = Image.new("RGB", (sheet_width, sheet_height), "white")
         draw = ImageDraw.Draw(sheet)
 
-        for idx in range(labels_per_sheet):
-            global_idx = sheet_index * labels_per_sheet + idx
-            if global_idx >= len(labels):
-                break
-            label = labels[global_idx]
-            # Calculate position
-            x = (idx % cols) * label_width
-            y = (idx // cols) * label_height
-            lines = label.split("\n")
-            total_text_height = len(lines) * (font_size + 4)
-            start_y = y + (label_height - total_text_height) // 2
-            for i, line in enumerate(lines):
-                bbox = draw.textbbox((0, 0), line, font=font)
-                text_width = bbox[2] - bbox[0]
-                text_height = bbox[3] - bbox[1]
-                text_x = x + (label_width - text_width) // 2
-                text_y = start_y + i * (font_size + 4)
-                draw.text((text_x, text_y), line, fill="black", font=font)
+        with Pilmoji(sheet) as pilmoji:
+            for idx in range(labels_per_sheet):
+                global_idx = sheet_index * labels_per_sheet + idx
+                if global_idx >= len(labels):
+                    break
+                label = labels[global_idx]
+                # Calculate position
+                x = (idx % cols) * label_width
+                y = (idx // cols) * label_height
+                lines = label.split("\n")
+                total_text_height = len(lines) * (font_size + 4)
+                start_y = y + (label_height - total_text_height) // 2
+                for i, line in enumerate(lines):
+                    bbox = draw.textbbox((0, 0), line, font=font)
+                    text_width = bbox[2] - bbox[0]
+                    text_x = x + (label_width - text_width) // 2
+                    text_y = start_y + i * (font_size + 4)
+                    pilmoji.text((text_x, text_y), line, fill="black", font=font)
 
         sheets.append(sheet)
 
